@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_presensi"
+        android:icon="@drawable/ic_mic_black_24dp"
+        android:title="@string/title_presensi" />
+
+    <item
+        android:id="@+id/navigation_daftar"
+        android:icon="@drawable/ic_library_books_black_24dp"
+        android:iconTint="#FFFFFF"
+        android:title="@string/title_daftar" />
+
+    <item
+        android:id="@+id/navigation_tambah"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:iconTint="#FFFFFF"
+        android:title="@string/title_tambah"/>
+    <item
+        android:id="@+id/navigation_hapus"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/title_hapus" />
+</menu>

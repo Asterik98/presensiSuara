@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "161457855103",
+    "firebase_url": "https://presensisuara-4623c.firebaseio.com",
+    "project_id": "presensisuara-4623c",
+    "storage_bucket": "presensisuara-4623c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161457855103:android:d0478d01de3071d00abd4a",
+        "android_client_info": {
+          "package_name": "com.example.asterik.presensi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161457855103-1r3pueomvot6524oh5524v242tpf7t28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUjOhEUu595WBe1nXFrtFlVt4_IiAI92M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161457855103-1r3pueomvot6524oh5524v242tpf7t28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

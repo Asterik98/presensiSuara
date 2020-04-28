@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_presensi">
+
+    <fragment
+        android:id="@+id/navigation_presensi"
+        android:name="com.example.asterik.presensi.ui.presensi.PresensiFragment"
+        android:label="@string/title_presensi"
+        tools:layout="@layout/fragment_presensi" />
+
+    <fragment
+        android:id="@+id/navigation_daftar"
+        android:name="com.example.asterik.presensi.ui.daftarPresensi.DaftarPresensiFragment"
+        android:label="@string/title_daftar"
+        tools:layout="@layout/fragment_daftar" />
+
+    <fragment
+        android:id="@+id/navigation_tambah"
+        android:name="com.example.asterik.presensi.ui.tambahData.TambahDataFragment"
+        android:label="@string/title_tambah"
+        tools:layout="@layout/fragment_tambah" />
+    <fragment
+        android:id="@+id/navigation_hapus"
+        android:name="com.example.asterik.presensi.ui.hapusData.HapusDataFragment"
+        android:label="@string/title_hapus"
+        tools:layout="@layout/fragment_hapus" />
+</navigation>

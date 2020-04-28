@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Presensi</string>
+    <string name="title_presensi">PRESENSI</string>
+    <string name="title_daftar">DAFTAR PRESENSI</string>
+    <string name="title_tambah">TAMBAH DATA</string>
+    <string name="title_hapus">HAPUS DATA</string>
+    <string name="infoRekam">TAP DAN SEBUTKAN IDENTITAS</string>
+    <string name="waktu">03:00</string>
+    <string name="tambah_info">TULISKAN NAMA PANGGILAN</string>
+    <string name="example_nama">contoh EDI, BUDI, SUSAN, dll</string>
+    <string name="tahun">2020</string>
+    <string name="tanggal">Rab, 29 Apr</string>
+</resources>
