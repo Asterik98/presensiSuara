@@ -40,18 +40,18 @@ public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.Catego
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        //TextView status;
-        //TextView waktu;
+        TextView status;
+        TextView waktu;
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.nama);
-            //status = itemView.findViewById(R.id.status);
-            //waktu = itemView.findViewById(R.id.waktu);
+            status = itemView.findViewById(R.id.status);
+            waktu = itemView.findViewById(R.id.waktu);
         }
         void bind(Pegawai data){
             name.setText(data.getName());
-            //status.setText(data.getStatus());
-            //waktu.setText(data.getJam());
+            status.setText(data.getStatus());
+            waktu.setText(data.getJam());
         }
     }
 }

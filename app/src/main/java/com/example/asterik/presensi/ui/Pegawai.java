@@ -2,13 +2,13 @@ package com.example.asterik.presensi.ui;
 
 public class Pegawai {
     String name;
-    //String status;
-    //String jam;
+    String status;
+    String jam;
 
-    public Pegawai(String name) {
+    public Pegawai(String name, String status, String waktu) {
         this.name = name;
-        //this.status = status;
-        //this.jam = waktu;
+        this.status = status;
+        this.jam = waktu;
     }
 
     public String getName() {
@@ -19,19 +19,19 @@ public class Pegawai {
         this.name = name;
     }
 
-   // public String getStatus() {
-    //    return status;
-    //}
+    public String getStatus() {
+        return status;
+    }
 
-    //public void setStatus(String status) {
-     //   this.status = status;
-   // }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-   // public String getJam() {
-   //     return jam;
-   // }
+    public String getJam() {
+        return jam;
+    }
 
-    //public void setJam(String jam) {
-    //    this.jam = jam;
-    //}
+    public void setJam(String jam) {
+        this.jam = jam;
+    }
 }

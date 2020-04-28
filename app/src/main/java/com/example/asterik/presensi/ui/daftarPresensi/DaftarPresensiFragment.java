@@ -54,13 +54,13 @@ public class DaftarPresensiFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren() ){
-                    pegawai=new Pegawai(null);
+                    pegawai=new Pegawai(null,null,null);
                     name= postSnapshot.getKey().toString();
-                    //waktu= postSnapshot.child(name).child("Jam").getValue(String.class).toString();
-                    //status=postSnapshot.child(name).child("Status").getValue(String.class).toString();
+                    waktu= postSnapshot.child(name).child("Jam").getValue(String.class).toString();
+                    status=postSnapshot.child(name).child("Status").getValue(String.class).toString();
                     pegawai.setName(name);
-                    // pegawai.setJam(waktu);
-                    //pegawai.setStatus(status);
+                    pegawai.setJam(waktu);
+                    pegawai.setStatus(status);
                     list.add(pegawai);
                 }
                 listDaftarAdapter.notifyDataSetChanged();
