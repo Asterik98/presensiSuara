@@ -38,19 +38,20 @@
 
     <TextView
         android:id="@+id/waktu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="122dp"
         android:layout_marginStart="8dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/waktu"
         android:textAlignment="center"
-        android:textSize="70sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/detik"
         app:layout_constraintEnd_toEndOf="@+id/detik"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/detik"
         app:layout_constraintTop_toTopOf="@+id/detik"
-        app:layout_constraintVertical_bias="0.493" />
+        app:layout_constraintVertical_bias="0.537" />
 
     <ImageButton
         android:id="@+id/record"
@@ -58,6 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:src="@drawable/rekam"
+        android:onClick="recordSuara"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

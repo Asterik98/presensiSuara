@@ -1,14 +1,19 @@
 package com.example.asterik.presensi.ui;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Pegawai {
     String name;
     String status;
     String jam;
 
-    public Pegawai(String name, String status, String waktu) {
+    public Pegawai(String name, String Status, String Jam) {
         this.name = name;
-        this.status = status;
-        this.jam = waktu;
+        this.status = Status;
+        this.jam = Jam;
     }
 
     public String getName() {

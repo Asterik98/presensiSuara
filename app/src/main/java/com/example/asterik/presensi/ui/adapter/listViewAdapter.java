@@ -1,5 +1,6 @@
-package com.example.asterik.presensi.ui;
+package com.example.asterik.presensi.ui.adapter;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asterik.presensi.R;
+import com.example.asterik.presensi.ui.Pegawai;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,9 @@ public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.Catego
     public listViewAdapter(Context context,ArrayList<Pegawai>dataPresensi) {
         this.context = context;
         this.listPegawai=dataPresensi;
+    }
+    public void clear(){
+        listPegawai.clear();
     }
 
     @NonNull
@@ -52,6 +57,15 @@ public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.Catego
             name.setText(data.getName());
             status.setText(data.getStatus());
             waktu.setText(data.getJam());
+            if(data.getStatus().equals("Tepat")){
+                status.setBackgroundResource(R.drawable.tepat_box);
+
+            }else if(data.getStatus().equals("Terlambat")){
+                status.setBackgroundResource(R.drawable.telat_box);
+                status.setTextColor(Color.WHITE);
+            }else if(data.getStatus().equals("Tidak Masuk")){
+                status.setBackgroundResource(R.drawable.tidak_masuk_box);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,7 +33,7 @@
         android:fontFamily="@font/regular"
         android:textColor="#FFFFFF"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_toLeftOf="@+id/tanggal"/>
     <TextView
@@ -51,7 +50,7 @@
         android:layout_below="@+id/teksTahun"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/teksTanggal"
