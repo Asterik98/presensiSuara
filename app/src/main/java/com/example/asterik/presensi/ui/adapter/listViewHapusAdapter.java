@@ -12,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asterik.presensi.R;
+import com.example.asterik.presensi.ui.hapusData.HapusDataFragment;
 
 import java.util.ArrayList;
 
 public class listViewHapusAdapter extends RecyclerView.Adapter<listViewHapusAdapter.CategoryViewHolder> {
     private Context context;
     private ArrayList<String> listHapus;
-    private ArrayList<String> checked;
+
     public listViewHapusAdapter(Context context,ArrayList<String>dataHapus) {
         this.context = context;
         this.listHapus=dataHapus;
@@ -44,14 +45,17 @@ public class listViewHapusAdapter extends RecyclerView.Adapter<listViewHapusAdap
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         CheckBox name;
-
+        private ArrayList<String>checked = new ArrayList<>();
+        HapusDataFragment hapus;
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.checkbox);
             name.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    checked.add(String.valueOf(name.getText()));
+                    String nama=String.valueOf(name.getText());
+                    checked.add(nama);
+                    hapus.jumlahHapus.setText(String.valueOf(checked.size()));
                 }
             });
         }

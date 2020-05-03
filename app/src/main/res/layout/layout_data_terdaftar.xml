@@ -16,7 +16,7 @@
         android:fontFamily="@font/bold"
         android:text="@string/namaDeteksi"
         android:textAlignment="center"
-        android:textSize="90sp"
+        android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

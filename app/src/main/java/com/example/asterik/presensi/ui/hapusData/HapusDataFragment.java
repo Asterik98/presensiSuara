@@ -38,7 +38,7 @@ public class HapusDataFragment extends Fragment {
     ArrayList<String>hapus;
     public static listViewHapusAdapter listHapusAdapter;
     public String name;
-    TextView jumlahHapus;
+    public TextView jumlahHapus;
     ImageButton hapusButton;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
