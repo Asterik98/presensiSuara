@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/infoHapus"
         android:textColor="#FFFFFF"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:fontFamily="@font/medium"
         android:textSize="20sp"
         android:layout_marginTop="32dp"
@@ -42,8 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:visibility="gone"
         android:background="@null"
         android:src="@drawable/hapus" />
 
@@ -55,13 +56,15 @@
         android:layout_alignTop="@+id/hapus"
         android:layout_alignEnd="@+id/hapus"
         android:layout_alignBottom="@+id/hapus"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="76dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="45dp"
-        android:visibility="visible"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/medium"
-        android:text="20"
+        android:gravity="center"
+        android:text="0"
         android:textColor="#DFDEDE"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.Rekam;

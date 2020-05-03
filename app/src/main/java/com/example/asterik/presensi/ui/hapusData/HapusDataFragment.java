@@ -1,6 +1,13 @@
 package com.example.asterik.presensi.ui.hapusData;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,16 +16,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.example.asterik.presensi.R;
+import com.example.asterik.presensi.ui.KonfirmasiDeletePegawai;
+import com.example.asterik.presensi.ui.RekamAddData;
 import com.example.asterik.presensi.ui.adapter.listViewHapusAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,11 +35,11 @@ public class HapusDataFragment extends Fragment {
     private FirebaseDatabase firedb;
     private DatabaseReference daftar;
     ArrayList<String>list;
-    ArrayList<String>hapus;
+    public static ArrayList<String>hapus;
     public static listViewHapusAdapter listHapusAdapter;
     public String name;
-    public TextView jumlahHapus;
-    ImageButton hapusButton;
+    public static TextView jumlahHapus;
+    public static ImageButton hapusButton;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -63,6 +63,14 @@ public class HapusDataFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        hapusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moveWithObjectIntent = new Intent(getContext(), KonfirmasiDeletePegawai.class);
+                moveWithObjectIntent.putExtra(RekamAddData.PEGAWAI_DATA, hapus);
+                startActivity(moveWithObjectIntent);
+            }
+        });
         listHapusAdapter = new listViewHapusAdapter(getActivity(),list);
         progressBar = root.findViewById(R.id.progressBar);
         showLoading(true);
@@ -80,6 +88,15 @@ public class HapusDataFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         }
     }
-
-
+    public static void getDataHapus(ArrayList<String>dataHapus){
+        if(dataHapus.size()==0) {
+            jumlahHapus.setVisibility(View.INVISIBLE);
+            hapusButton.setVisibility(View.INVISIBLE);
+        }else{
+            jumlahHapus.setVisibility(View.VISIBLE);
+            hapusButton.setVisibility(View.VISIBLE);
+        }
+        jumlahHapus.setText(String.valueOf(dataHapus.size()));
+        hapus=dataHapus;
+    }
 }

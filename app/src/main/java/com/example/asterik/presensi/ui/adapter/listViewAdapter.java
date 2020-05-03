@@ -1,18 +1,21 @@
 package com.example.asterik.presensi.ui.adapter;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.Pegawai;
+import com.example.asterik.presensi.R;
 
 import java.util.ArrayList;
+
+;
 
 public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.CategoryViewHolder> {
 

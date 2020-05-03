@@ -24,6 +24,7 @@
         <activity android:name=".ui.HasilPresensiNone" ></activity>
         <activity android:name=".ui.RekamAddData" ></activity>
         <activity android:name=".ui.DataTerdaftar" ></activity>
+        <activity android:name=".ui.KonfirmasiDeletePegawai" ></activity>
     </application>
 
 </manifest>

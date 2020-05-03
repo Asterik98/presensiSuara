@@ -1,10 +1,5 @@
 package com.example.asterik.presensi;
 
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Pegawai {
     String name;
     String status;
