@@ -75,17 +75,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:fontFamily="@font/regular"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/bold"
         android:text="@string/statusDeteksi"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.657"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tanggalDeteksi" />
+        app:layout_constraintTop_toBottomOf="@+id/statusTeks" />
 
     <TextView
         android:id="@+id/statusTeks"
@@ -100,24 +101,22 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.324"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tanggalDeteksi" />
 
-    <Button
-        android:id="@+id/record"
-        android:layout_width="100dp"
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="116dp"
-        android:background="#FF0000"
         android:onClick="back"
-        android:text="Kembali ke Home"
-        android:textColor="#FFFFFF"
-        android:fontFamily="@font/medium"
+        android:src="@drawable/back"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detik"
+        app:layout_constraintTop_toBottomOf="@+id/statusDeteksi"
         app:layout_constraintVertical_bias="0.619" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.asterik.presensi.ui;
+package com.example.asterik.presensi;
 
 import com.google.firebase.database.Exclude;
 

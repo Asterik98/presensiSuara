@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.adapter.listViewHapusAdapter;
@@ -31,13 +35,17 @@ public class HapusDataFragment extends Fragment {
     private FirebaseDatabase firedb;
     private DatabaseReference daftar;
     ArrayList<String>list;
+    ArrayList<String>hapus;
     public static listViewHapusAdapter listHapusAdapter;
     public String name;
-
+    TextView jumlahHapus;
+    ImageButton hapusButton;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hapus, container, false);
+        jumlahHapus=(TextView)root.findViewById(R.id.jumlahHapus);
+        hapusButton=(ImageButton)root.findViewById(R.id.hapus);
         firedb = FirebaseDatabase.getInstance();
         daftar = firedb.getReference("Daftar");
         list=new ArrayList<>();
@@ -62,6 +70,7 @@ public class HapusDataFragment extends Fragment {
         rvCategory.setAdapter(listHapusAdapter);
         rvCategory.addItemDecoration(new DividerItemDecoration(rvCategory.getContext(), DividerItemDecoration.VERTICAL));
         rvCategory.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
         return root;
     }
     private void showLoading(Boolean state) {

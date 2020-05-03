@@ -25,13 +25,13 @@ public class Rekam extends AppCompatActivity {
         new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                detik.setTextSize(70);
-                detik.setText("0"+second+":00");
+                detik.setTextSize(80);
+                detik.setText(String.valueOf(second));
                 second--;
             }
 
             public void onFinish() {
-                Intent moveWithObjectIntent = new Intent(getApplicationContext(), HasilPresensiTerdeteksi.class);
+                Intent moveWithObjectIntent = new Intent(getApplicationContext(), HasilPresensiNone.class);
                 startActivity(moveWithObjectIntent);
             }
         }.start();

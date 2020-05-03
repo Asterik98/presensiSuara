@@ -16,7 +16,7 @@
         android:fontFamily="@font/bold"
         android:text="@string/tambah_info"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -39,4 +39,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_notifications"
         app:layout_constraintVertical_bias="0.075" />
+
+    <ImageButton
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:background="@null"
+        android:src="@drawable/lanjut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nama" />
 </androidx.constraintlayout.widget.ConstraintLayout>

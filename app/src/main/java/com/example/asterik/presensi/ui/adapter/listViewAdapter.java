@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asterik.presensi.R;
-import com.example.asterik.presensi.ui.Pegawai;
+import com.example.asterik.presensi.Pegawai;
 
 import java.util.ArrayList;
 

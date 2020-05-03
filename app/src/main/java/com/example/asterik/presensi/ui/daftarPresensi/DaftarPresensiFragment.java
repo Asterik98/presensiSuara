@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.DatePickerFragment;
 import com.example.asterik.presensi.ui.adapter.listViewAdapter;
-import com.example.asterik.presensi.ui.Pegawai;
+import com.example.asterik.presensi.Pegawai;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +50,6 @@ public class DaftarPresensiFragment extends Fragment {
     ImageButton pilihTanggal;
     TextView tanggal;
     TextView tahun;
-    Date date;
     Locale indo=new Locale("id");
     SimpleDateFormat simpledateformat=new SimpleDateFormat("EEEE, MMMM d",indo);
 

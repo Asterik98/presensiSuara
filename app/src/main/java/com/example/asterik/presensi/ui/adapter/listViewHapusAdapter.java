@@ -3,6 +3,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +16,9 @@ import com.example.asterik.presensi.R;
 import java.util.ArrayList;
 
 public class listViewHapusAdapter extends RecyclerView.Adapter<listViewHapusAdapter.CategoryViewHolder> {
-
     private Context context;
     private ArrayList<String> listHapus;
+    private ArrayList<String> checked;
     public listViewHapusAdapter(Context context,ArrayList<String>dataHapus) {
         this.context = context;
         this.listHapus=dataHapus;
@@ -40,11 +43,17 @@ public class listViewHapusAdapter extends RecyclerView.Adapter<listViewHapusAdap
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
+        CheckBox name;
 
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.nama);
+            name = itemView.findViewById(R.id.checkbox);
+            name.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    checked.add(String.valueOf(name.getText()));
+                }
+            });
         }
         void bind(String data){
             name.setText(data);

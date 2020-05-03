@@ -21,6 +21,9 @@
         </activity>
         <activity android:name=".ui.Rekam" ></activity>
         <activity android:name=".ui.HasilPresensiTerdeteksi" ></activity>
+        <activity android:name=".ui.HasilPresensiNone" ></activity>
+        <activity android:name=".ui.RekamAddData" ></activity>
+        <activity android:name=".ui.DataTerdaftar" ></activity>
     </application>
 
 </manifest>

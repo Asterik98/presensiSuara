@@ -16,12 +16,9 @@ import com.example.asterik.presensi.ui.Rekam;
 
 public class PresensiFragment extends Fragment {
 
-    private PresensiViewModel presensiViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        presensiViewModel =
-                ViewModelProviders.of(this).get(PresensiViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_presensi, container, false);
         ImageButton rekam = (ImageButton) root.findViewById(R.id.mulai);
         rekam.setOnClickListener(new View.OnClickListener() {
