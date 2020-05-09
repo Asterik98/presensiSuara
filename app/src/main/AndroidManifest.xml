@@ -3,6 +3,8 @@
     package="com.example.asterik.presensi">
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +27,15 @@
         <activity android:name=".ui.RekamAddData" ></activity>
         <activity android:name=".ui.DataTerdaftar" ></activity>
         <activity android:name=".ui.KonfirmasiDeletePegawai" ></activity>
+        <activity android:name=".Alarm" ></activity>
+        <receiver
+            android:name=".Alarm"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
     </application>
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 </manifest>

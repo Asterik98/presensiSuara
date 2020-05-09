@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class Alarm extends BroadcastReceiver implements LifecycleOwner {
+public class Alarm extends BroadcastReceiver{
     private FirebaseDatabase firedb;
     private DatabaseReference daftar;
     public static final String TYPE_REPEATING = "Daily Remainder";
@@ -52,23 +52,8 @@ public class Alarm extends BroadcastReceiver implements LifecycleOwner {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-    }
-
-
-    public void setRepeatingAlarm(Context context, String type) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, Alarm.class);
-        intent.putExtra(EXTRA_TYPE, type);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, 0);
-        if (alarmManager != null) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             for(int i=0;i<daftarNama.size();i++) {
-                daftar.child(String.valueOf(daftarNama.indexOf(i))).push().setValue(fixDate);
                 daftar.child(String.valueOf(daftarNama.indexOf(i))).child(fixDate).child("Jam").setValue("-");
                 daftar.child(String.valueOf(daftarNama.indexOf(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
             }
@@ -76,9 +61,20 @@ public class Alarm extends BroadcastReceiver implements LifecycleOwner {
     }
 
 
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return null;
+    public void setRepeatingAlarm(Context context, String type) {
+        firedb = FirebaseDatabase.getInstance();
+        daftar = firedb.getReference("Daftar");
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Alarm.class);
+        intent.putExtra(EXTRA_TYPE, type);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 00);
+        calendar.set(Calendar.MINUTE, 00);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
+
+
 }
