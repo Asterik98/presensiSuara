@@ -51,6 +51,7 @@ public class DaftarPresensiFragment extends Fragment {
     TextView tahun;
     Locale indo=new Locale("id");
     SimpleDateFormat simpledateformat=new SimpleDateFormat("EEEE, MMMM d",indo);
+    SimpleDateFormat simpledateformat2=new SimpleDateFormat("dd-MM-yyyy");
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class DaftarPresensiFragment extends Fragment {
         tahun=(TextView) root.findViewById(R.id.teksTahun);
         Calendar calendar=Calendar.getInstance();
         String fixDate=simpledateformat.format(calendar.getTime());
+        final String dateNow=simpledateformat2.format(calendar.getTime());
         tanggal.setText(fixDate);
         pilihTanggal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +78,12 @@ public class DaftarPresensiFragment extends Fragment {
                 for (DataSnapshot postSnapshot: snapshot.getChildren() ){
                     pegawai=new Pegawai(null,null,null);
                     name= postSnapshot.getKey();
-                    waktu = postSnapshot.child("29-3-2020").child("Jam").getValue(String.class);
-                    status = postSnapshot.child("29-3-2020").child("Status").getValue(String.class);
+                    waktu = postSnapshot.child(dateNow).child("Jam").getValue(String.class);
+                    status = postSnapshot.child(dateNow).child("Status").getValue(String.class);
                     pegawai.setName(name);
                     pegawai.setStatus(status);
                     pegawai.setJam(waktu);
                     list.add(pegawai);
-                    index++;
                 }
                 listDaftarAdapter.notifyDataSetChanged();
                 showLoading(false);
@@ -130,12 +131,16 @@ public class DaftarPresensiFragment extends Fragment {
             tanggal.setText(fixDate);
             tahun.setText(String.valueOf(year));
             list.clear();
+            final String infoDate;
+            if (monthOfYear+1<10) {
+                infoDate = dayOfMonth + "-" + 0+(monthOfYear + 1) + "-" + year;
+            }else{
+                infoDate = dayOfMonth + "-" +(monthOfYear + 1) + "-" + year;
+            }
             daftar.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     for (DataSnapshot postSnapshot: snapshot.getChildren() ){
-                        Log.d("index",index.toString());
-                        String infoDate=String.valueOf(dayOfMonth)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(year);
                         pegawai=new Pegawai(null,null,null);
                         name= postSnapshot.getKey();
                         waktu = postSnapshot.child(infoDate).child("Jam").getValue(String.class);
@@ -144,7 +149,6 @@ public class DaftarPresensiFragment extends Fragment {
                         pegawai.setStatus(status);
                         pegawai.setJam(waktu);
                         list.add(pegawai);
-                        index++;
                     }
                     listDaftarAdapter.notifyDataSetChanged();
                 }

@@ -62,7 +62,6 @@ public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.Catego
             waktu.setText(data.getJam());
             if(data.getStatus().equals("Tepat")){
                 status.setBackgroundResource(R.drawable.tepat_box);
-
             }else if(data.getStatus().equals("Terlambat")){
                 status.setBackgroundResource(R.drawable.telat_box);
                 status.setTextColor(Color.WHITE);
