@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.Rekam;
+import com.example.asterik.presensi.ui.pilihNama;
 
 public class PresensiFragment extends Fragment {
 
@@ -22,8 +23,7 @@ public class PresensiFragment extends Fragment {
         rekam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent moveWithObjectIntent = new Intent(getContext(), Rekam.class);
+                Intent moveWithObjectIntent = new Intent(getContext(), pilihNama.class);
                 startActivity(moveWithObjectIntent);
             }
         });
