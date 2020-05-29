@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -30,12 +31,13 @@
         <activity android:name=".ui.RekamAddData" ></activity>
         <activity android:name=".ui.DataTerdaftar" ></activity>
         <activity android:name=".ui.KonfirmasiDeletePegawai" ></activity>
-        <activity android:name=".Alarm" ></activity>
         <activity android:name=".ui.pilihNama" ></activity>
-        <receiver
-            android:name=".Alarm"
-            android:enabled="true"
+        <receiver android:name=".Alarm"
+            android:enabled="false"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
         </receiver>
     </application>
 </manifest>

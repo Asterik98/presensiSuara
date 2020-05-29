@@ -64,7 +64,7 @@ public class Rekam extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private String uploadUrl="http://192.168.1.101:80/";
+    private String uploadUrl="http://192.168.1.102:80/";
     private MediaRecorder recorder;
     private String hasil;
     private ProgressBar progressBar;
@@ -157,10 +157,11 @@ public class Rekam extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response.toString());
                     hasil=obj.getString("prediction");
-                    Log.d("hasil ",hasil);
                     showLoading(false);
+                    Log.d("Nama",nama);
                     if(hasil.equals(nama)==false) {
                         Intent moveWithObjectIntent = new Intent(getApplicationContext(), HasilPresensiNone.class);
+                        moveWithObjectIntent.putExtra(HasilPresensiNone.NAMA_TEMP, nama);
                         startActivity(moveWithObjectIntent);
                     }else if(hasil.equals(nama)==true){
                         Calendar calendar=Calendar.getInstance();

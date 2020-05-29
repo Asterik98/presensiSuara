@@ -4,12 +4,15 @@
     <string name="title_daftar">DAFTAR PRESENSI</string>
     <string name="title_tambah">TAMBAH DATA</string>
     <string name="title_hapus">HAPUS DATA</string>
+    <string name="title_admin">ADMIN</string>
     <string name="infoRekam">TAP DAN SEBUTKAN IDENTITAS</string>
     <string name="infoRekamAdd">LAKUKAN 50 KALI REKAMAN</string>
     <string name="waktu">3</string>
     <string name="detik">DETIK</string>
     <string name="tambah_info">TULISKAN NAMA PANGGILAN</string>
     <string name="example_nama">Contoh Edi, Susan</string>
+    <string name="example_email">Tuliskan Email Admin</string>
+    <string name="example_password">Tuliskan Password</string>
     <string name="tahun">2020</string>
     <string name="tanggal">Rab, 29 Apr</string>
     <string name="infoHapus">PILIH NAMA YANG AKAN DIHAPUS</string>
@@ -24,7 +27,9 @@
     <string name="maaf">MAAF</string>
     <string name="tidakterdeteksi">TIDAK TERDETEKSI</string>
     <string name="nol">0</string>
-    <string name="full">20</string>
+    <string name="full">50</string>
+    <string name="infoEmail">Email</string>
+    <string name="infoPassword">Password</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

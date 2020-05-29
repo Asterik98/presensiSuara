@@ -21,4 +21,8 @@
         android:id="@+id/navigation_hapus"
         android:icon="@drawable/ic_clear_black_24dp"
         android:title="@string/title_hapus" />
+    <item
+        android:id="@+id/navigation_login"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="@string/title_admin" />
 </menu>

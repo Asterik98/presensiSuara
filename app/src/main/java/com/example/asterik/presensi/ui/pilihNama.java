@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,17 +31,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class pilihNama extends AppCompatActivity {
     private RecyclerView rvCategory;
     private ProgressBar progressBar;
     private FirebaseDatabase firedb;
     private DatabaseReference daftar;
-    ArrayList<String> list;
+    ArrayList<Pegawai> list;
     public static listViewPilihAdapter listViewPilihAdapter;
     public String name;
-
+    public String waktu;
+    Pegawai pegawai;
+    SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +53,18 @@ public class pilihNama extends AppCompatActivity {
         firedb = FirebaseDatabase.getInstance();
         daftar = firedb.getReference("Daftar");
         list=new ArrayList<>();
+        Calendar calendar=Calendar.getInstance();
+        final String tanggal=simpledateformat.format(calendar.getTime());
         daftar.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren() ){
+                    pegawai=new Pegawai(null,null,null);
                     name= postSnapshot.getKey();
-                    list.add(name);
+                    waktu = postSnapshot.child(tanggal).child("Jam").getValue(String.class);
+                    pegawai.setName(name);
+                    pegawai.setJam(waktu);
+                    list.add(pegawai);
                 }
                 listViewPilihAdapter.notifyDataSetChanged();
                 showLoading(false);
@@ -72,11 +84,16 @@ public class pilihNama extends AppCompatActivity {
         ItemClickSupport.addTo(rvCategory).setOnItemClickListener(  new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                String nama = list.get(position);
-                Intent moveWithObjectIntent = new Intent(getApplicationContext(), Rekam.class);
-                moveWithObjectIntent.putExtra(Rekam.PILIH_NAMA,nama);
-                startActivity(moveWithObjectIntent);
-                showLoading(false);
+                Pegawai pegawai = list.get(position);
+                String nama=pegawai.getName();
+                if(pegawai.getJam().equals("-")==true) {
+                    Intent moveWithObjectIntent = new Intent(getApplicationContext(), Rekam.class);
+                    moveWithObjectIntent.putExtra(Rekam.PILIH_NAMA, nama);
+                    startActivity(moveWithObjectIntent);
+                    showLoading(false);
+                }else{
+                    Toast.makeText(getApplicationContext(), nama+" telah presensi", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

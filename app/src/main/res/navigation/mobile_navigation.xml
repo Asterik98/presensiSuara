@@ -27,4 +27,9 @@
         android:name="com.example.asterik.presensi.ui.hapusData.HapusDataFragment"
         android:label="@string/title_hapus"
         tools:layout="@layout/fragment_hapus" />
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.asterik.presensi.ui.signin.SignInFragment"
+        android:label="@string/title_admin"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +22,8 @@ import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.KonfirmasiDeletePegawai;
 import com.example.asterik.presensi.ui.RekamAddData;
 import com.example.asterik.presensi.ui.adapter.listViewHapusAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HapusDataFragment extends Fragment {
-
+    private FirebaseAuth mAuth;
     private RecyclerView rvCategory;
     private ProgressBar progressBar;
     private FirebaseDatabase firedb;
@@ -44,6 +48,7 @@ public class HapusDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hapus, container, false);
+        mAuth = FirebaseAuth.getInstance();
         jumlahHapus=(TextView)root.findViewById(R.id.jumlahHapus);
         hapusButton=(ImageButton)root.findViewById(R.id.hapus);
         firedb = FirebaseDatabase.getInstance();
@@ -98,5 +103,14 @@ public class HapusDataFragment extends Fragment {
         }
         jumlahHapus.setText(String.valueOf(dataHapus.size()));
         hapus=dataHapus;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(getActivity(),"Sign In Terlebih Dahulu",Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(getView()).navigate(R.id.navigation_login);
+        }
     }
 }

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.asterik.presensi.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
@@ -37,6 +40,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,6 +49,8 @@ import java.util.Map;
 import static java.lang.Integer.parseInt;
 
 public class RekamAddData extends AppCompatActivity {
+    private FirebaseDatabase firedb;
+    private DatabaseReference daftar;
     public static final String PEGAWAI_DATA= "pegawai_data";
     TextView detik;
     TextView detikTeks;
@@ -63,11 +69,14 @@ public class RekamAddData extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private String uploadUrl="http://192.168.1.101:80/new/";
+    private String uploadUrl="http://192.168.1.102:80/new";
+    SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_rekam_add_data);
+        firedb = FirebaseDatabase.getInstance();
+        daftar = firedb.getReference("Daftar");
         detik=(TextView)findViewById(R.id.waktu);
         progres=(ProgressBar)findViewById(R.id.progress);
         detikTeks=(TextView)findViewById(R.id.detikTeks);
@@ -97,10 +106,9 @@ public class RekamAddData extends AppCompatActivity {
         progres.setProgressTintList(ColorStateList.valueOf(0xFFFF6D00));
         second=3;
         startRecording(indeks);
-        timer=new CountDownTimer(3000, 1000) {
+        timer=new CountDownTimer(4000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                Log.d("second",String.valueOf(second));
                 detik.setText(String.valueOf(second));
                 detikTeks.setText("Detik");
                 record.setVisibility(View.GONE);
@@ -109,9 +117,9 @@ public class RekamAddData extends AppCompatActivity {
 
             public void onFinish() {
                 indeks++;
-                progres.setProgress(indeks*20);
+                progres.setProgress(indeks*2);
                 record.setVisibility(View.VISIBLE);
-                if(indeks==5) {
+                if(indeks==51) {
                     stopRecording();
                     kirim.setVisibility(View.VISIBLE);
                     record.setVisibility(View.GONE);
@@ -120,7 +128,7 @@ public class RekamAddData extends AppCompatActivity {
                     gambarDetik.setVisibility(View.GONE);
                 }else{
                     stopRecording();
-                    detik.setText(String.valueOf(5-indeks));
+                    detik.setText(String.valueOf(51-indeks));
                     detikTeks.setText("Lagi");
                 }
 
@@ -130,6 +138,7 @@ public class RekamAddData extends AppCompatActivity {
     public void kirim(View v){
         progressBar.setVisibility(View.VISIBLE);
         showLoading(true);
+        //kirim.setVisibility(View.INVISIBLE);
         uploadAudio();
 
     }
@@ -161,18 +170,28 @@ public class RekamAddData extends AppCompatActivity {
 
     private void uploadAudio() {
         showLoading(true);
-        Map<String, ArrayList<String>> params = new HashMap<String, ArrayList<String>>();
+        String[]nama={name};
+        Map<String, String[]> params = new HashMap<String, String[]>();
+        params.put("name",nama);
         params.put("audio", audioToString());
         RequestQueue queue = Volley.newRequestQueue(this.getApplicationContext());
         JSONObject parameters = new JSONObject(params);
-
+        Calendar calendar2=Calendar.getInstance();
+        final String tanggal=simpledateformat.format(calendar2.getTime());
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, uploadUrl, parameters, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                showLoading(false);
-                Intent moveWithObjectIntent = new Intent(getApplicationContext(), DataTerdaftar.class);
-                moveWithObjectIntent.putExtra(DataTerdaftar.PEGAWAI_DATA_TERDAFTAR,name);
-                startActivity(moveWithObjectIntent);
+                try {
+                    JSONObject obj = new JSONObject(response.toString());
+                    Log.d("hasil",obj.getString("hasil"));
+                    showLoading(false);
+                    daftar.child(name).child(tanggal).child("Jam").setValue("-");
+                    daftar.child(name).child(tanggal).child("Status").setValue("Tidak Masuk");
+                    Intent moveWithObjectIntent = new Intent(getApplicationContext(), DataTerdaftar.class);
+                    moveWithObjectIntent.putExtra(DataTerdaftar.PEGAWAI_DATA_TERDAFTAR, name);
+                    startActivity(moveWithObjectIntent);
+                } catch (JSONException e) {
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -180,20 +199,25 @@ public class RekamAddData extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonRequest);
     }
 
-    private ArrayList<String> audioToString(){
-        ArrayList<String>dataBaru=new ArrayList<>();
-        while(indeks>0) {
-            File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/com.example.asterik.presensi/cache/" + String.valueOf(indeks) + ".wav");
+    private String[] audioToString(){
+        String[] dataBaru= new String[indeks-1];
+        while(indeks-2>=0) {
+            File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/com.example.asterik.presensi/cache/" + String.valueOf(indeks-1) + ".wav");
             try {
                 byte[] bytes = FileUtils.readFileToByteArray(file);
                 String encoded = Base64.encodeToString(bytes, Base64.DEFAULT);
-                dataBaru.add(encoded);
+                dataBaru[indeks-2]=encoded;
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
+            indeks--;
         }
         return dataBaru;
     }
