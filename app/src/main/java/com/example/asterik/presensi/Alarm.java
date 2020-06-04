@@ -28,7 +28,7 @@ public class Alarm extends BroadcastReceiver{
     private ArrayList<String>daftarNama=new ArrayList<>();
     String fixDate;
     SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
-    SimpleDateFormat simpledateformat2=new SimpleDateFormat("HH.mm");
+    SimpleDateFormat simpledateformat2=new SimpleDateFormat("HH");
     Calendar calendar=Calendar.getInstance();
     public Alarm() {
         firedb = FirebaseDatabase.getInstance();
@@ -37,54 +37,35 @@ public class Alarm extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+            setFirebase();
+        }else {
+            setFirebase();
+        }
+    }
+    public void setFirebase(){
         Calendar calendar2=Calendar.getInstance();
         String jam=simpledateformat2.format(calendar2.getTime());
-        if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-            Log.d("jam",jam);
-            if(jam.equals("00.00")){
-                flag=true;
-                Log.d("flag","a");
-            }
-            getName(new MyCallback() {
-                @Override
-                public void onCallback(ArrayList<String> value) {
-                    if(flag==true) {
-                        daftarNama = value;
-                        fixDate = simpledateformat.format(calendar.getTime());
-                        for (int i = 0; i < daftarNama.size(); i++) {
-                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
-                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
-                        }
-                        flag=false;
-                        Log.d("flag","b");
-                    }
-                }
-            });
-        }else{
-            Log.d("jam",jam);
-            if(jam.equals("00.00")){
-                flag=true;
-                Log.d("flag","a");
-            }
-            getName(new MyCallback() {
-                @Override
-                public void onCallback(ArrayList<String> value) {
-                    if(flag==true) {
-                        daftarNama = value;
-                        fixDate = simpledateformat.format(calendar.getTime());
-                        for (int i = 0; i < daftarNama.size(); i++) {
-                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
-                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
-                        }
-                        flag=false;
-                        Log.d("flag","b");
-                    }
-                }
-            });
+        if(jam.equals("00")){
+            flag=true;
+            Log.d("flag","a");
         }
-
+        getName(new MyCallback() {
+            @Override
+            public void onCallback(ArrayList<String> value) {
+                if(flag==true) {
+                    daftarNama = value;
+                    fixDate = simpledateformat.format(calendar.getTime());
+                    for (int i = 0; i < daftarNama.size(); i++) {
+                        daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
+                        daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
+                    }
+                    flag=false;
+                    Log.d("flag","b");
+                }
+            }
+        });
     }
-
     public void setRepeatingAlarm(Context context, String type) {
         firedb = FirebaseDatabase.getInstance();
         daftar = firedb.getReference("Daftar");
@@ -93,8 +74,7 @@ public class Alarm extends BroadcastReceiver{
         intent.putExtra(EXTRA_TYPE, type);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 00);
-        calendar.set(Calendar.MINUTE, 00);
-        calendar.set(Calendar.SECOND, 00);
+        calendar.set(Calendar.MINUTE, 10);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         ComponentName receiver = new ComponentName(context, Alarm.class);

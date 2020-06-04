@@ -56,17 +56,23 @@ public class listViewAdapter extends RecyclerView.Adapter<listViewAdapter.Catego
             status = itemView.findViewById(R.id.status);
             waktu = itemView.findViewById(R.id.waktu);
         }
-        void bind(Pegawai data){
-            name.setText(data.getName());
-            status.setText(data.getStatus());
-            waktu.setText(data.getJam());
-            if(data.getStatus().equals("Tepat")){
-                status.setBackgroundResource(R.drawable.tepat_box);
-            }else if(data.getStatus().equals("Terlambat")){
-                status.setBackgroundResource(R.drawable.telat_box);
-                status.setTextColor(Color.WHITE);
-            }else if(data.getStatus().equals("Tidak Masuk")){
-                status.setBackgroundResource(R.drawable.tidak_masuk_box);
+        void bind(Pegawai data) {
+            if (data.getJam() != null && data.getStatus() != null) {
+                name.setText(data.getName());
+                status.setText(data.getStatus());
+                waktu.setText(data.getJam());
+                if (data.getStatus().equals("Tepat")) {
+                    status.setBackgroundResource(R.drawable.tepat_box);
+                } else if (data.getStatus().equals("Terlambat")) {
+                    status.setBackgroundResource(R.drawable.telat_box);
+                    status.setTextColor(Color.WHITE);
+                } else if (data.getStatus().equals("Tidak Masuk")) {
+                    status.setBackgroundResource(R.drawable.tidak_masuk_box);
+                }
+            }else{
+                name.setText(data.getName());
+                status.setText("Kosong");
+                waktu.setText("Kosong");
             }
         }
     }

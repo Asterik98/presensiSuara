@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -118,7 +119,7 @@ public class DaftarPresensiFragment extends Fragment {
         args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
         date.setArguments(args);
         date.setCallBack(ondate);
-        date.show(getFragmentManager(), "Date Picker");
+        date.show(getActivity().getSupportFragmentManager(), "Date Picker");
     }
 
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
@@ -133,10 +134,19 @@ public class DaftarPresensiFragment extends Fragment {
             list.clear();
             final String infoDate;
             if (monthOfYear+1<10) {
-                infoDate = dayOfMonth + "-" + 0+(monthOfYear + 1) + "-" + year;
+                if(dayOfMonth<10){
+                    infoDate = "0" + (dayOfMonth) + "-" +"0"+ (monthOfYear + 1) + "-" + year;
+                }else {
+                    infoDate = dayOfMonth + "-" + "0" + (monthOfYear + 1) + "-" + year;
+                }
             }else{
-                infoDate = dayOfMonth + "-" +(monthOfYear + 1) + "-" + year;
+                if(dayOfMonth<10){
+                    infoDate = "0" + dayOfMonth + "-" +(monthOfYear + 1) + "-" + year;
+                }else {
+                    infoDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                }
             }
+
             daftar.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {

@@ -54,6 +54,7 @@ public class RekamAddData extends AppCompatActivity {
     public static final String PEGAWAI_DATA= "pegawai_data";
     TextView detik;
     TextView detikTeks;
+    TextView info;
     ImageView gambarDetik;
     ImageButton mulai;
     ImageButton kirim;
@@ -78,6 +79,7 @@ public class RekamAddData extends AppCompatActivity {
         firedb = FirebaseDatabase.getInstance();
         daftar = firedb.getReference("Daftar");
         detik=(TextView)findViewById(R.id.waktu);
+        info=(TextView)findViewById(R.id.infoRekam);
         progres=(ProgressBar)findViewById(R.id.progress);
         detikTeks=(TextView)findViewById(R.id.detikTeks);
         gambarDetik=(ImageView)findViewById(R.id.detik);
@@ -137,8 +139,9 @@ public class RekamAddData extends AppCompatActivity {
     }
     public void kirim(View v){
         progressBar.setVisibility(View.VISIBLE);
+        info.setText("Tunggu Hingga Proses Selesai");
         showLoading(true);
-        //kirim.setVisibility(View.INVISIBLE);
+        kirim.setVisibility(View.INVISIBLE);
         uploadAudio();
 
     }
