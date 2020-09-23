@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,7 +41,7 @@ public class KonfirmasiDeletePegawai extends AppCompatActivity {
     private DatabaseReference daftar;
     public static final String PEGAWAI_DATA= "pegawai_data";
     public static ArrayList<String> nama;
-    private String uploadUrl="http://192.168.1.102:80/hapus";
+    private String uploadUrl="http://18.220.9.243:5000/hapus";
     TextView teksKonfirmasi;
     String namaYangDihapus;
     ImageButton hapus;
@@ -124,6 +125,10 @@ public class KonfirmasiDeletePegawai extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonRequest);
     }
     public void cancel(View v){

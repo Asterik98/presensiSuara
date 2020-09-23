@@ -10,10 +10,12 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,8 @@ import com.example.asterik.presensi.Pegawai;
 import com.example.asterik.presensi.R;
 import com.example.asterik.presensi.ui.DatePickerFragment;
 import com.example.asterik.presensi.ui.adapter.listViewAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +40,7 @@ import java.util.Locale;
 import static java.util.Calendar.getInstance;
 
 public class DaftarPresensiFragment extends Fragment {
+    private FirebaseAuth mAuth;
     private RecyclerView rvCategory;
     private ProgressBar progressBar;
     private FirebaseDatabase firedb;
@@ -46,7 +51,6 @@ public class DaftarPresensiFragment extends Fragment {
     public String name;
     public String waktu;
     public String status;
-    Integer index=0;
     ImageButton pilihTanggal;
     TextView tanggal;
     TextView tahun;
@@ -58,6 +62,7 @@ public class DaftarPresensiFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_daftar, container, false);
         firedb = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         daftar = firedb.getReference("Daftar");
         list=new ArrayList<>();
         pilihTanggal=(ImageButton)root.findViewById(R.id.tanggal);
@@ -129,6 +134,7 @@ public class DaftarPresensiFragment extends Fragment {
             Calendar calendar=Calendar.getInstance();
             calendar.set(year,monthOfYear,dayOfMonth);
             String fixDate=simpledateformat.format(calendar.getTime());
+            view.setMaxDate(System.currentTimeMillis());
             tanggal.setText(fixDate);
             tahun.setText(String.valueOf(year));
             list.clear();
@@ -170,4 +176,13 @@ public class DaftarPresensiFragment extends Fragment {
             rvCategory.setAdapter(listDaftarAdapter);
         }
     };
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(getActivity(),"Sign In Terlebih Dahulu",Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(getView()).navigate(R.id.navigation_login);
+        }
+    }
 }

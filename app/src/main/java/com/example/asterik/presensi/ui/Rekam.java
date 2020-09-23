@@ -58,16 +58,19 @@ public class Rekam extends AppCompatActivity {
     private DatabaseReference daftar;
     TextView detik;
     TextView info;
+    TextView infoAmplitude;
     Integer second;
     public static String PILIH_NAMA = "PILIH_NAMA";
     private static String fileName;
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private String uploadUrl="http://192.168.1.102:80/";
+    private String uploadUrl="http://18.220.9.243:5000/";
     private MediaRecorder recorder;
     private String hasil;
     private ProgressBar progressBar;
+    Integer amplitudo;
+    Double dB;
     ImageButton rekam;
     String nama;
     SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
@@ -82,6 +85,7 @@ public class Rekam extends AppCompatActivity {
         rekam=(ImageButton)findViewById(R.id.record);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         info=(TextView) findViewById(R.id.infoRekam);
+        infoAmplitude=(TextView) findViewById(R.id.infoAmplitude);
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         fileName=getExternalCacheDir().getAbsolutePath();
         fileName += "/test.wav";
@@ -99,23 +103,36 @@ public class Rekam extends AppCompatActivity {
         }
         if (!permissionToRecordAccepted ) finish();
     }
-    public void recordSuara(View view){
+    public void recordSuara(final View view){
         rekam.setVisibility(view.INVISIBLE);
+        infoAmplitude.setVisibility(View.INVISIBLE);
         second=3;
         startRecording();
+        amplitudo=0;
         new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
                 detik.setTextSize(80);
                 detik.setText(String.valueOf(second));
                 second--;
+                amplitudo=recorder.getMaxAmplitude();
             }
 
             public void onFinish() {
-                info.setVisibility(View.INVISIBLE);
+                dB = 20*Math.log10((amplitudo/3) / 32767.0);
+                Log.d("Db",String.valueOf(dB));
                 stopRecording();
-                uploadAudio();
-
-
+                if(dB>=(-30) && dB<=-(20)) {
+                    info.setVisibility(View.INVISIBLE);
+                    uploadAudio();
+                }else if(dB<(-30)){
+                    rekam.setVisibility(view.VISIBLE);
+                    infoAmplitude.setText("SUARA KURANG KERAS");
+                    infoAmplitude.setVisibility(View.VISIBLE);
+                }else if(dB>(-20)){
+                    rekam.setVisibility(view.VISIBLE);
+                    infoAmplitude.setText("SUARA TERLALU KERAS");
+                    infoAmplitude.setVisibility(View.VISIBLE);
+                }
             }
         }.start();
 
@@ -152,6 +169,7 @@ public class Rekam extends AppCompatActivity {
         JSONObject parameters = new JSONObject(params);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, uploadUrl, parameters, new Response.Listener<JSONObject>() {
+
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -213,6 +231,10 @@ public class Rekam extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonRequest);
     }
 

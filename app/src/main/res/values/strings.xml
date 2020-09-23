@@ -30,6 +30,7 @@
     <string name="full">50</string>
     <string name="infoEmail">Email</string>
     <string name="infoPassword">Password</string>
+    <string name="infoAmplitude">SUARA KURANG KERAS</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

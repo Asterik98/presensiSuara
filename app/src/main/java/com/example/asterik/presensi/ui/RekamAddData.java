@@ -70,7 +70,7 @@ public class RekamAddData extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private String uploadUrl="http://192.168.1.102:80/new";
+    private String uploadUrl="http://18.220.9.243:5000/new";
     SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -203,7 +203,7 @@ public class RekamAddData extends AppCompatActivity {
             }
         });
         jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5,
+                0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonRequest);

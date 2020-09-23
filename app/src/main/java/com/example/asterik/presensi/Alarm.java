@@ -16,40 +16,48 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 
 public class Alarm extends BroadcastReceiver{
     private FirebaseDatabase firedb;
     private DatabaseReference daftar;
+    private DatabaseReference testIsi;
     public static final String TYPE_REPEATING = "Daily Remainder";
     public static final String EXTRA_TYPE = "type";
     private final int ID_REPEATING = 101;
     boolean flag=false;
     private ArrayList<String>daftarNama=new ArrayList<>();
     String fixDate;
+    Locale indo=new Locale("id");
     SimpleDateFormat simpledateformat=new SimpleDateFormat("dd-MM-yyyy");
     SimpleDateFormat simpledateformat2=new SimpleDateFormat("HH");
+    SimpleDateFormat simpledateformat3=new SimpleDateFormat("EEEE",indo);
     Calendar calendar=Calendar.getInstance();
+    Calendar calendar2=Calendar.getInstance();
     public Alarm() {
         firedb = FirebaseDatabase.getInstance();
         daftar = firedb.getReference("Daftar");
+        testIsi = firedb.getReference("Daftar");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-            setFirebase();
+            flag=true;
         }else {
-            setFirebase();
+            String jam=simpledateformat2.format(calendar2.getTime());
+            log.d("jam",jam);
+            if(jam.equals("23") || jam.equals("00")||jam.equals("01")){
+                flag=true;
+            }
         }
+        setFirebase();
     }
     public void setFirebase(){
-        Calendar calendar2=Calendar.getInstance();
-        String jam=simpledateformat2.format(calendar2.getTime());
-        if(jam.equals("00")){
-            flag=true;
-            Log.d("flag","a");
-        }
+        final String hari=simpledateformat3.format(calendar2.getTime());
         getName(new MyCallback() {
             @Override
             public void onCallback(ArrayList<String> value) {
@@ -57,8 +65,13 @@ public class Alarm extends BroadcastReceiver{
                     daftarNama = value;
                     fixDate = simpledateformat.format(calendar.getTime());
                     for (int i = 0; i < daftarNama.size(); i++) {
-                        daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
-                        daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
+                        if(hari.equals("Minggu")==false) {
+                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
+                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Tidak Masuk");
+                        }else{
+                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Jam").setValue("-");
+                            daftar.child(String.valueOf(daftarNama.get(i))).child(fixDate).child("Status").setValue("Libur");
+                        }
                     }
                     flag=false;
                     Log.d("flag","b");
@@ -74,7 +87,7 @@ public class Alarm extends BroadcastReceiver{
         intent.putExtra(EXTRA_TYPE, type);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 00);
-        calendar.set(Calendar.MINUTE, 10);
+        calendar.set(Calendar.MINUTE, 05);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         ComponentName receiver = new ComponentName(context, Alarm.class);
@@ -102,4 +115,5 @@ public class Alarm extends BroadcastReceiver{
             }
         });
     }
+
 }
